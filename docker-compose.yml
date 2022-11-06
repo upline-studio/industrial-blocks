@@ -1,0 +1,55 @@
+version: '3.5'
+
+networks:
+  frontend:
+  backend:
+
+volumes:
+  geoserver-data:
+  postgres-data:
+  pgadmin:
+
+services:
+  ### Geoserver ###########################################
+  geoserver:
+    image: kartoza/geoserver:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - geoserver-data:/opt/geoserver/data_dir
+    environment:
+      GEOSERVER_DATA_DIR: /opt/geoserver/data_dir
+      GEOSERVER_ADMIN_USER: admin
+      GEOSERVER_ADMIN_PASSWORD: geoserver
+    networks:
+      - backend
+
+  ### pgAdmin ##############################################
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      - "PGADMIN_DEFAULT_EMAIL=user@domain.com"
+      - "PGADMIN_DEFAULT_PASSWORD=secret"
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    depends_on:
+      - postgres-postgis
+    networks:
+      - frontend
+      - backend
+
+  ### PostgreSQL PostGis ###################################
+  postgres-postgis:
+    image: postgis/postgis:latest
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=moscow
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    networks:
+      - backend
