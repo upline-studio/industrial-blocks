@@ -3,6 +3,7 @@ import { createPinia } from "pinia";
 import "leaflet";
 import "leaflet-wfst";
 import "leaflet/dist/leaflet.css";
+import "@bopen/leaflet-area-selection/dist/index.css";
 
 import App from "./App.vue";
 import router from "./router";
