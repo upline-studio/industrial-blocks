@@ -55,8 +55,11 @@ export default {
 			console.log(selectedAreaGeoJSON.value)
 		})
 		onMounted(async () => {
-			layoutsData.value = await fetchGeoserverData()
-			isFetched.value = true;
+			const layoutsGeoJSON = await fetchGeoserverData()
+			if (layoutsGeoJSON) {
+				layoutsData.value = layoutsGeoJSON
+				isFetched.value = true;
+			}
 		})
 
 		return {
