@@ -7,13 +7,18 @@ export async function fetchGeoserverData() {
 	const result = []
 	try {
 		for (const layout of layouts) {
-			const { name, bbox } = layout
-			const resp = await axios({
-				method: 'get',
-				url: `${URL}&layers=${name}&bbox=${bbox}&width=768&height=330&srs=EPSG%3A4326&styles=&format=geojson`,
-			});
-			layout.geojson = resp.data
-			result.push(layout);
+			const { name, bbox, status } = layout
+			if (status) {
+				const resp = await axios({
+					method: 'get',
+					url: `${URL}&layers=${name}&bbox=${bbox}&width=768&height=330&srs=EPSG%3A4326&styles=&format=geojson`,
+				});
+				const { data } = resp
+				if (data && data.type === 'FeatureCollection') {
+					layout.geojson = resp.data
+					result.push(layout);
+				}
+			}
 		}
 		return result
 	} catch (e) {
