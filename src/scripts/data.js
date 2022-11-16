@@ -45,7 +45,7 @@ export const layouts = [
 		type: 'point',
 		name:
 			'moscow%3A%D0%9E%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8_%D0%A1%D0%92%D0%90%D0%9E_%D0%A1%D0%90%D0%9E',
-		isEnabled: true,
+		isEnabled: false,
 		bbox: '37.37728500366211%2C55.7609748840332%2C37.73512268066406%2C55.951751708984375',
 		options: {
 			style() {
@@ -64,9 +64,12 @@ export const layouts = [
 	},
 	{
 		id: 'СЗЗ',
+		title: 'Санитарные зоны',
 		name: 'moscow%3A%D0%A1%D0%97%D0%97',
+		status: true,
 		bbox: '37.33365249633789%2C55.75892639160156%2C37.71660614013672%2C55.958702087402344',
-		isEnabled: true,
+		isEnabled: false,
+		status: true,
 		options: {
 			style() {
 				return {
@@ -103,6 +106,8 @@ export const layouts = [
 	},
 	{
 		id: 'Территории_объектов_культурного_н',
+		title: 'Объекты культурного наследия',
+		status: true,
 		name:
 			'moscow%3A%D0%A2%D0%B5%D1%80%D1%80%D0%B8%D1%82%D0%BE%D1%80%D0%B8%D0%B8_%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D0%BE%D0%B2_%D0%BA%D1%83%D0%BB%D1%8C%D1%82%D1%83%D1%80%D0%BD%D0%BE%D0%B3%D0%BE_%D0%BD',
 		isEnabled: false,
@@ -110,7 +115,7 @@ export const layouts = [
 		options: {
 			style() {
 				return {
-					color: '#0ff77f',
+					color: 'blue',
 				};
 			},
 			onEachFeature(feature, layer) {
@@ -123,8 +128,10 @@ export const layouts = [
 	},
 	{
 		id: 'land',
+		title: 'Земельные участки с коэффициентом эффективности',
 		name: 'moscow%3Aland',
 		isEnabled: false,
+		status: true,
 		bbox: '37.334346771240234%2C55.75446701049805%2C37.83428955078125%2C55.957977294921875',
 		options: {
 			style(feature) {
@@ -138,7 +145,7 @@ export const layouts = [
 			},
 			onEachFeature(feature, layer) {
 				layer.bindPopup(
-					`total points: ${feature.properties.percent_total}`
+					`Кадастровый номер: ${feature.properties.kadastr}</br>Общий критерий не эффективности: ${feature.properties.percent_total}%`
 				);
 			}
 		},
